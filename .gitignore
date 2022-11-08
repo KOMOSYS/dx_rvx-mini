@@ -1,0 +1,16 @@
+*~
+*.sw*
+*.bak
+source
+.rvx_*
+rvx_*.log
+.login_info
+update.sh
+rvx_python_config.mh
+python3.bat
+
+sync
+rvx_util
+rvx_hwlib
+install_second
+manual
