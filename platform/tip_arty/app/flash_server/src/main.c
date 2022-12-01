@@ -13,10 +13,11 @@ int main() {
 	int cmd;
 	int num_bytes;
 	unsigned int flash_addr;
-	volatile int* data_array = (volatile int*)(SRAM_ADDR+SRAM_SIZE-0x2000);
+	volatile int* data_array = (volatile int*)(SRAM_ADDR+SRAM_ACTUAL_SIZE-0x2000);
 
 	if(EXCLUSIVE_ID==0)
 	{
+#ifdef INCLUDE_SPI_FLASH
 		printf("\n[RVC|INFO] flash server is running");
 		printf("\n[RVC|INFO] flash base addr: 0x%x", get_flash_base_addr());
 		printf("\n[RVC|INFO] buffer is set to 0x%x", data_array);
@@ -50,6 +51,11 @@ int main() {
 					flash_addr = get_gpreg(1);
 					num_bytes = get_gpreg(2);
 					printf("\n[RVC|INFO] flash write 0x%x num_bytes: %d first data: 0x%8x", flash_addr, num_bytes, data_array[0]);
+          if((flash_addr&3)!=0)
+          {
+            printf("\n[RVC|ERROR] addr is NOT aligned to 4");
+            break;
+          }
 					write_flash_wo_erase(flash_addr,num_bytes,(unsigned char*)data_array);
 					if(ENABLE_LOG==1)
 						for(i=0; i<num_bytes; i++)
@@ -65,6 +71,10 @@ int main() {
 				delay_ms(10);
 			}
 		}
+#else
+    printf("\n[RVC|ERROR] flash is NOT included");
+    set_gpreg(0,OCD_FLASH_CMD_IDLE);
+#endif
 	}
 	return 0;
 }
