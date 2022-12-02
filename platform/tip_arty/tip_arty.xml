@@ -40,13 +40,20 @@
 				<name>num_led_checker</name>
 				<value>1</value>
 			</define>
-		</spec>
-		<sw_define>
-			<use_profiling type="bool">True</use_profiling>
-		</sw_define>
+    </spec>
+
 		<ip_instance>
 			<name>i_main_core</name>
 			<library_name>rvc_orca</library_name>
-		</ip_instance>
+    </ip_instance>
+
+		<sw_define>
+			<use_profiling type="bool">True</use_profiling>
+    </sw_define>
+
+    <sim_define>
+			<simulate_spi_flash type='bool'>False</simulate_spi_flash>
+    </sim_define>
+
 	</platform>
 </rvx>

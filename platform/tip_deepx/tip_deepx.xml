@@ -11,7 +11,15 @@
 			<define>
 				<name>include_timer</name>
 				<value type="bool">True</value>
-			</define>
+      </define>
+      <define>
+				<name>include_plic</name>
+				<value type="bool">True</value>
+      </define>
+      <define>
+				<name>include_user_interrupts</name>
+				<value type="bool">True</value>
+      </define>
 			<define>
 				<name>include_slow_dram</name>
 				<value type="bool">True</value>
@@ -20,7 +28,58 @@
 				<name>num_led_checker</name>
 				<value>1</value>
 			</define>
-		</spec>
+    </spec>
+
+    <ip_instance>
+			<name>i_ip_npu</name>
+			<library_name>user_masterif_axi_clkout</library_name>
+			<parameter>
+				<id>BW_ADDR</id>
+				<value>32</value>
+			</parameter>
+			<parameter>
+				<id>BW_DATA</id>
+				<value>32</value>
+			</parameter>
+			<parameter>
+				<id>BW_AXI_TID</id>
+				<value>8</value>
+			</parameter>
+    </ip_instance>
+
+    <ip_instance>
+			<name>i_ip_axi4</name>
+			<library_name>user_masterif_axi_clkout</library_name>
+			<parameter>
+				<id>BW_ADDR</id>
+				<value>32</value>
+			</parameter>
+			<parameter>
+				<id>BW_DATA</id>
+				<value>32</value>
+			</parameter>
+			<parameter>
+				<id>BW_AXI_TID</id>
+				<value>8</value>
+			</parameter>
+    </ip_instance>
+
+    <ip_instance>
+			<name>i_ip_apb</name>
+			<library_name>user_slaveif_apb_clkout</library_name>
+			<parameter>
+				<id>SIZE_OF_MEMORYMAP</id>
+				<value>0x10000</value>
+			</parameter>
+			<parameter>
+				<id>BW_ADDR</id>
+				<value>32</value>
+			</parameter>
+			<parameter>
+				<id>BW_DATA</id>
+				<value>32</value>
+			</parameter>
+    </ip_instance>
 
 		<ip_instance>
 			<name>i_main_core</name>
@@ -31,6 +90,18 @@
 			<define>
 				<name>clk_core</name>
 				<value type="dec">50000000</value>
+      </define>
+      <define>
+				<name>clk_ip_npu</name>
+				<value type="dec">20000000</value>
+      </define>
+      <define>
+				<name>clk_ip_axi4</name>
+				<value type="dec">10000000</value>
+      </define>
+      <define>
+				<name>clk_ip_apb</name>
+				<value type="equal">clk_system</value>
 			</define>
     </clock_info>
 
